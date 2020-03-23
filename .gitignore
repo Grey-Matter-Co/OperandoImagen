@@ -1,0 +1,6 @@
+.vscode/*
+mainLinux.c
+mainWin.c
+displayingImage.c
+displayingImages2.c
+regex.*
