@@ -60,6 +60,9 @@ void main()
 
 	for(unsigned char *p = img, *pg = gray_img; p != img + img_size; p += channels, pg += gray_channels) 
 	{
+		printf("(%d, %d, %d, %d), ", *p, *(p + 1), *(p + 2), *(p + 3));
+		if ((p-img)% width == 0 )
+			printf("\n");
 		*pg = (uint8_t)((*p + *(p + 1) + *(p + 2))/3.0);
 		if(channels == 4)
 			*(pg + 1) = *(p + 3);
