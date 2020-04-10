@@ -4,3 +4,5 @@ mainWin.c
 displayingImage.c
 displayingImages2.c
 regex.*
+*.exe
+*.bmp

@@ -1,5 +1,6 @@
 #pragma once
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -13,6 +14,7 @@ enum allocation_type
 
 typedef struct
 {
+    char *name;
     int width;
     int height;
     int channels;
@@ -21,13 +23,14 @@ typedef struct
     enum allocation_type allocation_;
 } Image;
 
-int imageLoad(Image *img, const char *fname);
+int imageLoad(Image *img, char *path);
 void imageCreate(Image *img, int width, int height, int channels, bool zeroed);
-void imageSave(const Image *img, const char *fname);
+void imageSave(const Image *img);
 void imageFree(Image *img);
 void image2Grey(const Image *orig, Image *gray);
 void image2Sepia(const Image *orig, Image *sepia);
 int cfileexists(const char *fname);
+char *getNameFromPath(char *path);
     /*
 #pragma once 
 

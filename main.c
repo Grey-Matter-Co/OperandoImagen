@@ -3,47 +3,49 @@
 #include <stdlib.h>
 #include <string.h>
 
+void getImageWValidation(Image *img);
+
 int main()
 {
-    Image img, imgSepia, imgGrey;
-    char pathImg[260];
+    Image img1, img2, imgSepia, imgGrey;
 
-    while (1)   //Whole validation for image input
-    {
-        printf("ruta de imagen: ");
-        scanf("%s", pathImg);
+    getImageWValidation(&img1);
+    //getImageWValidation(img2);
 
-        if (strlen(pathImg) == 0)
-            printf("ERROR: Ingresa una ruta \n");
-        else if (strchr(pathImg, '.') == NULL)
-            printf("Incluye la externsion \n");
-        else if (strstr(pathImg, ".jpg") == NULL && strstr(pathImg, ".png") == NULL && strstr(pathImg, ".gif") == NULL && strstr(pathImg, ".bmp") == NULL)
-            printf("Externsion no valida. Solo jpg, png, gif, bmp \n");
-        else if (!imageLoad(&img, pathImg))
-            printf("el archivo %s no existe \n", pathImg);
-        else break;
-    }
+    // Operates images
+    image2Grey(&img1, &imgGrey);
 
-    //imageLoad(&img, "resources\\pinkblue.gif");
-    //ON_ERROR_EXIT(img.data == NULL, "Error in loading the image");
-
-    // Convert the images to gray
-    Image img_gray, img_shapes_gray;
-    image2Grey(&img, &img_gray);
-
-    // Convert the images to sepia
-    Image img_sepia, img_shapes_sepia;
-    image2Sepia(&img, &img_sepia);
-
-    // Save images
-    imageSave(&img_gray, "sky_gray.jpg");
-    imageSave(&img_sepia, "sky_sepia.jpg");
+    // Save resultant images
+    imageSave(&imgGrey);
 
     // Release memory
-    imageFree(&img);
-    imageFree(&img_gray);
-    imageFree(&img_sepia);
+    imageFree(&img1);
+    imageFree(&imgGrey);
 
-    system(".\\sky_gray.jpg");
-    system(".\\sky_sepia.jpg");
+    char command[300] = ".\\";
+    strcat(command, imgGrey.name);
+    system(command);
+}
+
+void getImageWValidation(Image *img)
+{
+    while (1) // Whole validation for image input
+    {
+        char path[260];
+
+        printf("ruta de imagen: ");
+        scanf("%s", path);
+
+        if (strlen(path) == 0)
+            printf("ERROR: Ingresa una ruta \n");
+        else if (strchr(path, '.') == NULL)
+            printf("Incluye la externsion \n");
+        else if (strstr(path, ".jpg") == NULL && strstr(path, ".png") == NULL && strstr(path, ".gif") == NULL && strstr(path, ".bmp") == NULL)
+            printf("Externsion no valida. Solo jpg, png, gif, bmp \n");
+        else if (!imageLoad(img, path))
+            printf("el archivo \"%s\" no existe \n", path);
+        //ON_ERROR_EXIT(img.data == NULL, "Error in loading the image");
+        else
+            break;
+    }
 }
