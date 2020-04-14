@@ -4,27 +4,37 @@
  * - Producto cartesiano de las 10 imagenes grises
  * - Producto cartesiano de las 20 imagenes (color y grises)
  * - restar a 1 imagen de color una imagen gris
+ * 
+ * Nota: Producto Cartesiano es 1px * toda la otra imagen, es decir 128px*128px=16384px 
  */
-#include "ImageOperator.h"
+#include "imageoperator.h"
+#include "cronometer.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #define VALIDSIZE 128
+#define UNION2FUNS(X, Y) { X; Y; }
 
 void getImageWValidation(Image *img);
 
 int main()
 {
     Image img1, img2, imgSepia, imgGrey;
+    Image *arrImgColor = malloc(sizeof(Image) * 10),
+          *arrImgGrey = malloc(sizeof(Image) * 10),
+          *arrImgPlus = malloc(sizeof(Image) * 10),
+          *arrImgMinus = malloc(sizeof(Image) * 10),
+          *arrImgCartesian = malloc(sizeof(Image) * 20),
+          *arrImgCartesianColor = malloc(sizeof(Image) * 10);
 
     getImageWValidation(&img1);
     //getImageWValidation(img2);
 
     // Operates images
-    image2Grey(&img1, &imgGrey);
+//    image2Grey(&img1, &imgGrey);
+
+    CRONO_THIS(UNION2FUNS(image2Grey(&img1, &imgGrey), imageSave(&imgGrey)));
 
     // Save resultant images
-    imageSave(&imgGrey);
+//    imageSave(&imgGrey);
 
     // Release memory
     imageFree(&img1);

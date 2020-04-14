@@ -18,10 +18,10 @@ Este programa recibe dos imágenes a través de la terminal dos imágenes almace
     > cd ./OperandoImagen
     ```
 
-3.  Compila el programa, incluyendo la librería agregada ImageOperator.h
+3.  Compila el programa, incluyendo las librerías agregadas imageoperator.h, cronometer.h
 
     ```
-    > gcc ImageOperator.c main.c -o main -lm
+    > gcc imageoperator.c cronometer.c main.c -o main -lm
     ```
 
 4.  Si el programa no arroja ningún Warning o Error, ejecuta el programa

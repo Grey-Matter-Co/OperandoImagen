@@ -1,4 +1,4 @@
-#include "ImageOperator.h"
+#include "imageoperator.h"
 #include <math.h>
 #include <string.h>
 
@@ -6,6 +6,8 @@
 #include "stb/stb_image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb/stb_image_write.h"
+
+#include <windows.h>
 
 int imageExists(const char *fname)
 {
@@ -66,6 +68,7 @@ void imageCreate(Image *img, int width, int height, int channels, bool zeroed)
 
 void imageSave(const Image *img)
 {
+    // saved in bmp because it don't have any compression
     stbi_write_bmp(strcat(img->name, ".bmp"), img->width, img->height, img->channels, img->data);
 }
 
@@ -87,10 +90,14 @@ void imageFree(Image *img)
 
 void image2Grey(const Image *img, Image *gray)
 {
-    //ON_ERROR_EXIT(!(img->allocation_ != NO_ALLOCATION && img->channels >= 3), "The input image must have at least 3 channels.");
+    /*
+    LARGE_INTEGER t_ini, t_fin;
+    double secs;
+    QueryPerformanceCounter(&t_ini);
+    */
+
     int channels = img->channels == 4 ? 2 : 1;
     imageCreate(gray, img->width, img->height, channels, false);
-    //ON_ERROR_EXIT(gray->data == NULL, "Error in creating the image");
 
     strcat(strcpy(gray->name, img->name), "_GreyScale");
 
@@ -100,4 +107,14 @@ void image2Grey(const Image *img, Image *gray)
         if (img->channels == 4)
             *(pg + 1) = *(p + 3);
     }
+    
+    /*
+    QueryPerformanceCounter(&t_fin);
+
+    LARGE_INTEGER freq;
+    QueryPerformanceFrequency(&freq);
+    secs = (double)(t_fin.QuadPart - t_ini.QuadPart) / (double)freq.QuadPart;
+
+    printf("%.16g milliseconds\n", secs * 1000.0);
+    */
 }
